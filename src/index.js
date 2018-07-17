@@ -1,30 +1,35 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Main from './components/main/Main'
-import { Router, Route, Link } from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Main from './components/main/Main';
+import {Router, Route, Link} from 'react-router-dom';
 import history from './utilities/history';
-import firebaseApp from './utilities/firebase'
-import App from './components/app/App'
-import SignIn from './components/sign-in/SignIn'
-import SignUp from './components/sign-up/SignUp'
+import {logUser} from './actions/index'
+import firebaseApp from './utilities/firebase';
+import App from './components/app/App';
+import SignIn from './components/sign-in/SignIn';
+import SignUp from './components/sign-up/SignUp';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import reducer from './reducers'
 
-let isSigned = false;
+const store = createStore(reducer);
 
 firebaseApp.auth().onAuthStateChanged(user => {
-  if(user){
-      console.log('signed');
-      history.push('/')
-  }else{
-      console.log('unsigned');
-      history.push('/signin')
+  if (user) {
+    const {email} = user;
+    store.dispatch(logUser(email))
+    history.push('/')
+  } else {
+    history.push('/signin')
   }
 })
 
-ReactDOM.render(
+ReactDOM.render(<Provider store={store  }>
   <Router history={history}>
-  <div>
-  <Route exact path="/" component={App}/>
-  <Route path="/signin" component={SignIn}/>
-  <Route path="/signup" component={SignUp}/>
-  </div>
-</Router>, document.getElementById('root'))
+    <div>
+      <Route exact path="/" component={App}/>
+      <Route path="/signin" component={SignIn}/>
+      <Route path="/signup" component={SignUp}/>
+    </div>
+  </Router>
+</Provider>, document.getElementById('root'))
