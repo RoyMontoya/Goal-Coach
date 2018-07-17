@@ -5,5 +5,5 @@ export function logUser(email) {
     type: SIGNED_IN,
     payload: email
   }
-  return action;
+  return action; 
 }
