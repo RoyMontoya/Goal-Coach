@@ -1,9 +1,15 @@
-import {SIGNED_IN} from '../utilities/constants'
+import {SIGNED_IN, SET_GOALS} from '../utilities/constants'
 
 export function logUser(email) {
-  const action = {
+  return ({
     type: SIGNED_IN,
     payload: email
-  }
-  return action; 
+  })
+}
+
+export function setGoals(goals){
+  return ({
+    type: SET_GOALS,
+    goals
+  })
 }

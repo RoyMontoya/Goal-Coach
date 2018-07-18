@@ -12,8 +12,8 @@ class App extends Component {
 
   render(){
     return (
-      <div>
-        <h3>Goals</h3>
+      <div style={{margin: '5px'}}>
+        <h3>Goal Coach</h3>
         <AddGoal />
         <GoalList />
         <button className="btn btn-danger"
