@@ -13,14 +13,14 @@ class GoalList extends Component {
       let goals = []
       snapshot.forEach(goal => {
         const {email, title} = goal.val();
-        goals.push({email, title});
+        const serverKey = goal.key;
+        goals.push({email, title, serverKey});
       })
       self.props.setGoals(goals);
     });
   }
 
   render() {
-    console.log(this.props.goals);
     return (<div>{this.props.goals.map((goal, index) => {
       return (
         // <div key={index}>{goal.title}</div>

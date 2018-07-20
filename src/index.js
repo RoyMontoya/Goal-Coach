@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Main from './components/main/Main';
-import {Router, Route, Link} from 'react-router-dom';
+import {Router, Route} from 'react-router-dom';
 import history from './utilities/history';
 import {logUser} from './actions/index'
 import firebaseApp from './utilities/firebase';
