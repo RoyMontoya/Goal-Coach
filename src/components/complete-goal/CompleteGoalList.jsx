@@ -1,27 +1,55 @@
 import React from 'react';
-import {completeGoal} from '../../utilities/firebase'
+import {completeGoalRef} from '../../utilities/firebase';
+import {connect} from 'react-redux'
+import {setCompleted} from '../../actions'
 
-export default class CompleteGoalList  extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+class CompleteGoalList  extends React.Component {
+  constructor(props) {
+    super(props);
 
-  componentDidMount(){
+    this.clearComplete = this.clearComplete.bind(this);
+  }
+  
+  clearComplete(){
+    completeGoalRef.set([]);
+  }
+
+  componentWillMount(){
+    //TODO clean
     console.log('did');
-    completeGoal.on('value', function(snapshot) {
+    const self = this;
+    completeGoalRef.on('value', function(snapshot) {
       let completeGoals = []
-      snapshot.forEach(complete =>{
-        const {email, title} = complete.val();
-        completeGoal.push({email, title})
+      snapshot.forEach(single =>{
+        const {email, title} = single.val();
+        completeGoals.push({email, title})
       })
       console.log(completeGoals);
+      self.props.setCompleted(completeGoals);
     });
+
   }
 
   render() {
-    return (<div>MyComponent</div>);
+    return (
+      <div>
+        {
+          this.props.complete.map((goal, index) => {
+            const {email, title} = goal;
+            return (
+              <div key={index}>
+                <strong>{title}</strong> completed by <em>{email}</em>
+              </div>
+            )
+          })
+        }
+        <button className="btn btn-primary"
+          onClick={this.clearComplete}>
+          Clear All
+        </button>
+      </div>
+    )
   }
 }
 
-// CompleteGoalList.propTypes = {
-// };
+export default connect((state) => ({complete :state.complete}), {setCompleted})(CompleteGoalList)

@@ -1,4 +1,4 @@
-import {SET_GOALS} from '../utilities/constants'
+ import {SET_GOALS} from '../utilities/constants'
 
 export default (state = [], action) => {
   switch (action.type) {
