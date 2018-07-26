@@ -9,22 +9,24 @@ class CompleteGoalList  extends React.Component {
 
     this.clearComplete = this.clearComplete.bind(this);
   }
-  
+
   clearComplete(){
     completeGoalRef.set([]);
   }
 
+  clearSingle(key){
+    completeGoalRef.child(key).remove();
+  }
+
   componentWillMount(){
-    //TODO clean
-    console.log('did');
     const self = this;
     completeGoalRef.on('value', function(snapshot) {
       let completeGoals = []
       snapshot.forEach(single =>{
+        const key = single.key;
         const {email, title} = single.val();
-        completeGoals.push({email, title})
+        completeGoals.push({email, title, key})
       })
-      console.log(completeGoals);
       self.props.setCompleted(completeGoals);
     });
 
@@ -35,10 +37,11 @@ class CompleteGoalList  extends React.Component {
       <div>
         {
           this.props.complete.map((goal, index) => {
-            const {email, title} = goal;
+            const {email, title, key} = goal;
             return (
               <div key={index}>
                 <strong>{title}</strong> completed by <em>{email}</em>
+                <button onClick={() => this.clearSingle(key)} className="btn btn-primary" style={{margin: '5px'}}>Clear</button>
               </div>
             )
           })

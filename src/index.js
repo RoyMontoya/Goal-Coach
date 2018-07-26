@@ -8,7 +8,7 @@ import App from './components/app/App';
 import SignIn from './components/sign-in/SignIn';
 import SignUp from './components/sign-up/SignUp';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore} from 'redux';
 import reducer from './reducers';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
