@@ -2,6 +2,7 @@ import React from 'react';
 import {completeGoalRef} from '../../utilities/firebase';
 import {connect} from 'react-redux'
 import {setCompleted} from '../../actions'
+import CompletedItem from './CompletedItem'
 
 class CompleteGoalList  extends React.Component {
   constructor(props) {
@@ -40,8 +41,7 @@ class CompleteGoalList  extends React.Component {
             const {email, title, key} = goal;
             return (
               <div key={index}>
-                <strong>{title}</strong> completed by <em>{email}</em>
-                <button onClick={() => this.clearSingle(key)} className="btn btn-primary" style={{margin: '5px'}}>Clear</button>
+              < CompletedItem clearSingle={this.clearSingle} email={email} title={title} code={key}/>
               </div>
             )
           })
