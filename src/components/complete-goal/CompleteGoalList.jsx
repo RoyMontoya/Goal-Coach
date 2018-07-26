@@ -38,10 +38,9 @@ class CompleteGoalList  extends React.Component {
       <div>
         {
           this.props.complete.map((goal, index) => {
-            const {email, title, key} = goal;
             return (
               <div key={index}>
-              < CompletedItem clearSingle={this.clearSingle} email={email} title={title} code={key}/>
+              < CompletedItem clearSingle={this.clearSingle} goal={goal}/>
               </div>
             )
           })
