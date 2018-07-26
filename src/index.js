@@ -8,10 +8,11 @@ import App from './components/app/App';
 import SignIn from './components/sign-in/SignIn';
 import SignUp from './components/sign-up/SignUp';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import reducer from './reducers'
+import {createStore, applyMiddleware} from 'redux';
+import reducer from './reducers';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
-const store = createStore(reducer);
+const store = createStore(reducer, composeWithDevTools());
 
 firebaseApp.auth().onAuthStateChanged(user => {
   if (user) {
@@ -23,7 +24,7 @@ firebaseApp.auth().onAuthStateChanged(user => {
   }
 })
 
-ReactDOM.render(<Provider store={store  }>
+ReactDOM.render(<Provider store={store}>
   <Router history={history}>
     <div>
       <Route exact path="/" component={App}/>
